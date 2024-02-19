@@ -48,7 +48,7 @@ public class StudenteController {
             User user = userOptional.get();
             model.addAttribute("user", user);
             model.addAttribute("corsi", corsoRepository.findAll());
-            return "/esami/elenco.html";
+            return "esami/elenco";
         } else {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }

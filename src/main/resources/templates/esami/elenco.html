@@ -33,12 +33,12 @@
 
     </header>
 
-    <div class="alert alert-primary" role="alert" th:if="${elenco.size()==0}">
+    <div class="alert alert-primary" role="alert" th:if="${corsi.size()==0}">
         <h3>Nessun prodotto trovato</h3>
     </div>
 
 
-    <table class="table table-success table-striped table-hover" th:if="${elenco.size()>0}">
+    <table class="table table-success table-striped table-hover" th:if="${corsi.size()>0}">
         <!-- intestazione della tabella -->
         <thead>
             <tr>
@@ -54,7 +54,7 @@
         </thead>
 
         <tbody>
-            <tr th:each="e: ${elenco}">
+            <tr th:each="e: ${corsi}">
 
                 <td class="text-end" th:text="${e.id}"></td>
                 <td th:text="${e.nome}"></td>
@@ -72,7 +72,6 @@
         </tbody>
     </table>
     </div>
-    <script th:replace="fragments/resources :: scripts"></script>
 </body>
 
 
