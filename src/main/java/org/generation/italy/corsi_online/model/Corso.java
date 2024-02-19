@@ -31,7 +31,7 @@ public class Corso {
 
     // Costruttore vuoto
     public Corso() {
-    }
+    }   
 
     // Costruttore con parametri
     public Corso(String nome, String settore, BigDecimal prezzo) {
