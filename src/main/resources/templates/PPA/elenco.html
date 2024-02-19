@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Elenco Prenotazioni</title>
+    <meta th:replace="fragments/resources">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <nav th:replace="fragments/navbar"></nav>
+            <!-- Navbar come nel tuo esempio -->
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <h2>Elenco Prenotazioni</h2>
+
+        <!-- Iterazione sulle prenotazioni del model -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Corso</th>
+                    <th>Data Prenotazione</th>
+                    <th>Data Esame</th>
+                    <th>Importo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Itera sulle prenotazioni del model -->
+                <tr th:each="prenotazione : ${prenotazioni}">
+                    <td th:text="${prenotazione.id}"></td>
+                    <td th:text="${prenotazione.dataEsame.Corso.nome}"></td>
+                    <td th:text="${prenotazione.dataPrenotazione}"></td>
+                    <td th:text="${prenotazione.dataEsame.dataEsame}"></td>
+                    <td th:text="${prenotazione.importo}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

@@ -67,19 +67,6 @@ public class StudenteController {
         }
     }
 
-    @GetMapping("/{userId}/ppa")
-    public String viewPPA(@PathVariable int userId, Model model) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            model.addAttribute("user", user);
-            model.addAttribute("ppaList", ppaRepository.findByStudente(user));
-            return "user/ppa";
-        } else {
-            return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
-        }
-    }
-
     @PostMapping("/{userId}/prenotazione")
     public String prenota(@PathVariable int userId, @ModelAttribute PPA prenotazione) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -100,7 +87,7 @@ public class StudenteController {
             User user = userOptional.get();
             model.addAttribute("user", user);
             model.addAttribute("prenotazioni", ppaRepository.findByStudente(user));
-            return "user/prenotazioni";
+            return "PPA/elenco";
         } else {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
