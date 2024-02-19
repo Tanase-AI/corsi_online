@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false, length = 32)
     private String username;
 
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -99,4 +99,14 @@ public class User {
         this.esamiSuperati = esamiSuperati;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '/' +
+                ", password='" + password + '/' +
+                ", email='" + email + '/' +
+                ", carta='" + carta + '/' +
+                '}';
+    }
 }

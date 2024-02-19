@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 
 // P.renotazione con P.agamento A.nticipato 
 @Entity
@@ -18,9 +19,9 @@ public class PPA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne // ! da togliere
-    @JoinColumn(name = "id_corso")
-    private Corso corso;
+    // @ManyToOne // ! da togliere
+    // @JoinColumn(name = "id_corso")
+    // private Corso corso;
 
     @ManyToOne
     @JoinColumn(name = "id_studente")
@@ -34,5 +35,62 @@ public class PPA {
 
     @Column(precision = 6, scale = 2)
     private BigDecimal importo;
+
+    @PrePersist
+    public void PrePersist() {
+        dataPrenotazione = LocalDateTime.now();
+    }
+
+    public void Studente(User user) {
+        // TODO Auto-generated method stub
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Corso getCorso() {
+        return dataEsame.getCorso();
+    }
+
+    // public void setCorso(Corso corso) {
+    // this.dataEsame.getCorso() = corso;
+    // }
+
+    public User getStudente() {
+        return studente;
+    }
+
+    public void setStudente(User studente) {
+        this.studente = studente;
+    }
+
+    public LocalDateTime getDataPrenotazione() {
+        return dataPrenotazione;
+    }
+
+    public void setDataPrenotazione(LocalDateTime dataPrenotazione) {
+        this.dataPrenotazione = dataPrenotazione;
+    }
+
+    public DateEsami getDataEsame() {
+        return dataEsame;
+    }
+
+    public void setDataEsame(DateEsami dataEsame) {
+        this.dataEsame = dataEsame;
+    }
+
+    public BigDecimal getImporto() {
+        return importo;
+    }
+
+    public void setImporto(BigDecimal importo) {
+        this.importo = importo;
+    }
 
 }

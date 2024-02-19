@@ -29,4 +29,74 @@ public class Corso {
     private List<EsamiSuperati> esamiSuperati;
     // Altri campi e metodi
 
+    // Costruttore vuoto
+    public Corso() {
+    }
+
+    // Costruttore con parametri
+    public Corso(String nome, String settore, BigDecimal prezzo) {
+        this.nome = nome;
+        this.settore = settore;
+        this.prezzo = prezzo;
+    }
+
+    // Getters and Setters
+    public short getId() {
+        return id;
+    }
+
+    public void setId(short id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSettore() {
+        return settore;
+    }
+
+    public void setSettore(String settore) {
+        this.settore = settore;
+    }
+
+    public List<DateEsami> getDateEsami() {
+        return dateEsami;
+    }
+
+    public void setDateEsami(List<DateEsami> dateEsami) {
+        this.dateEsami = dateEsami;
+    }
+
+    public BigDecimal getPrezzo() {
+        return prezzo;
+    }
+
+    public void setPrezzo(BigDecimal prezzo) {
+        this.prezzo = prezzo;
+    }
+
+    public List<EsamiSuperati> getEsamiSuperati() {
+        return esamiSuperati;
+    }
+
+    public void setEsamiSuperati(List<EsamiSuperati> esamiSuperati) {
+        this.esamiSuperati = esamiSuperati;
+    }
+
+    // toString method for debugging purposes
+    @Override
+    public String toString() {
+        return "Corso{" +
+                "id=" + id +
+                ", nome='" + nome + '/' +
+                ", settore='" + settore + '/' +
+                ", prezzo=" + prezzo +
+                '}';
+    }
 }

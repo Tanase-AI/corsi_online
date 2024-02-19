@@ -26,4 +26,45 @@ public class DateEsami {
         super();
     }
 
+    // Costruttore con parametri
+    public DateEsami(Corso corso, LocalDateTime dataEsame) {
+        this.corso = corso;
+        this.dataEsame = dataEsame;
+    }
+
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Corso getCorso() {
+        return corso;
+    }
+
+    public void setCorso(Corso corso) {
+        this.corso = corso;
+    }
+
+    public LocalDateTime getDataEsame() {
+        return dataEsame;
+    }
+
+    public void setDataEsame(LocalDateTime dataEsame) {
+        this.dataEsame = dataEsame;
+    }
+
+    // toString method for debugging purposes
+    @Override
+    public String toString() {
+        return "DateEsami{" +
+                "id=" + id +
+                ", corso=" + corso +
+                ", dataEsame=" + dataEsame +
+                '}';
+    }
+
 }

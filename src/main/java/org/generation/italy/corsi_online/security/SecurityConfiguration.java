@@ -27,12 +27,14 @@ public class SecurityConfiguration {
                                                 // richieste GET per nuovo, modifica, elimina prodotto richiedono il
                                                 // ruolo admin
                                                 .requestMatchers(
-                                                                "/Prodotti/nuovo",
-                                                                "/Prodotti/modifica/**",
-                                                                "/Prodotti/elimina/**",
-                                                                "/Fornitori/nuovo",
-                                                                "/Fornitori/modifica/**",
-                                                                "/Fornitori/elimina/**",
+                                                                "/DateEsami/nuovo",
+                                                                "/DateEsami/modifica/**",
+                                                                "/DateEsami/elimina/**",
+                                                                "/Corso/nuovo",
+                                                                "/Corso/modifica/**",
+                                                                "/EsamiSuperati/nuovo",
+                                                                "/EsamiSuperati/modifica/**",
+                                                                "/EsamiSuperati/elimina/**",
                                                                 "/servlet/prodotti/formnuovo")
                                                 .hasAuthority("Admin")
 
@@ -40,10 +42,12 @@ public class SecurityConfiguration {
                                                 // ruolo
                                                 // admin
                                                 .requestMatchers(HttpMethod.POST,
-                                                                "/Prodotti/nuovo",
-                                                                "/Prodotti/modifica/**",
-                                                                "/Fornitori/nuovo",
-                                                                "/Fornitori/modifica/**",
+                                                                "/DateEsami/nuovo",
+                                                                "/DateEsami/modifica/**",
+                                                                "/Corso/nuovo",
+                                                                "/Corso/modifica/**",
+                                                                "/EsamiSuperati/nuovo",
+                                                                "/EsamiSuperati/modifica/**",
                                                                 "/servlet/prodotti/nuovo")
                                                 .hasAuthority("Admin"))
 
@@ -51,7 +55,10 @@ public class SecurityConfiguration {
                                                 // richieste get che richiedono solo di autenticarsi
                                                 .requestMatchers(
                                                                 "/",
-                                                                "/Studente/*",
+                                                                "/Studente/**",
+                                                                "/PPA/nuovo/",
+                                                                "/PPA/modifica/**",
+                                                                "/PPA/elimina/**",
                                                                 "/webjars/**", // necessarie per bootstrap e font
                                                                                // awesome
                                                                 "/css/**",
