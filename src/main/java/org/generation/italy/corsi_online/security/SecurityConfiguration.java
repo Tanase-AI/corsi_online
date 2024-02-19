@@ -20,64 +20,70 @@ public class SecurityConfiguration {
         SecurityFilterChain filterChain(HttpSecurity http)
                         throws Exception {
                 http
-                                // .authorizeHttpRequests((requests) ->
-                                // requests.anyRequest().authenticated()).formLogin((form) ->
-                                // form.permitAll());/*
-                                .authorizeHttpRequests((requests) -> requests
-                                                // richieste GET per nuovo, modifica, elimina prodotto richiedono il
-                                                // ruolo admin
-                                                .requestMatchers(
-                                                                "/DateEsami/nuovo",
-                                                                "/DateEsami/modifica/**",
-                                                                "/DateEsami/elimina/**",
-                                                                "/Corso/nuovo",
-                                                                "/Corso/modifica/**",
-                                                                "/EsamiSuperati/nuovo",
-                                                                "/EsamiSuperati/modifica/**",
-                                                                "/EsamiSuperati/elimina/**",
-                                                                "/servlet/prodotti/formnuovo")
-                                                .hasAuthority("Admin")
-
-                                                // richieste POST per nuovo, modifica, elimina prodotto richiedono il
-                                                // ruolo
-                                                // admin
-                                                .requestMatchers(HttpMethod.POST,
-                                                                "/DateEsami/nuovo",
-                                                                "/DateEsami/modifica/**",
-                                                                "/Corso/nuovo",
-                                                                "/Corso/modifica/**",
-                                                                "/EsamiSuperati/nuovo",
-                                                                "/EsamiSuperati/modifica/**",
-                                                                "/servlet/prodotti/nuovo")
-                                                .hasAuthority("Admin"))
-
-                                .authorizeHttpRequests((requests) -> requests
-                                                // richieste get che richiedono solo di autenticarsi
-                                                .requestMatchers(
-                                                                "/",
-                                                                "/Studente/**",
-                                                                "/PPA/nuovo/",
-                                                                "/PPA/modifica/**",
-                                                                "/PPA/elimina/**",
-                                                                "/webjars/**", // necessarie per bootstrap e font
-                                                                               // awesome
-                                                                "/css/**",
-                                                                "/img/**",
-                                                                "/error")
-                                                .authenticated())
-
-                                // il form login è permesso a tutti
-                                .formLogin((form) -> form.permitAll())
-                                // pagina custom (da gestire in un controller):
-                                // .formLogin((form) -> form.loginPage("/userLogin").permitAll())
-
-                                // il logout è permesso a tutti
-                                .logout(
-                                                (logout) -> logout.permitAll())
-
-                                // protegge dagli attacchi Cross Site Request Forgery (CSRF)
-                                .csrf(Customizer.withDefaults());
-
+                                .authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
+                                .formLogin((form) -> form.permitAll());/*
+                                                                        * .authorizeHttpRequests((requests) -> requests
+                                                                        * // richieste GET per nuovo, modifica, elimina
+                                                                        * prodotto richiedono il
+                                                                        * // ruolo admin
+                                                                        * .requestMatchers(
+                                                                        * "/DateEsami/nuovo",
+                                                                        * "/DateEsami/modifica/**",
+                                                                        * "/DateEsami/elimina/**",
+                                                                        * "/Corso/nuovo",
+                                                                        * "/Corso/modifica/**",
+                                                                        * "/EsamiSuperati/nuovo",
+                                                                        * "/EsamiSuperati/modifica/**",
+                                                                        * "/EsamiSuperati/elimina/**",
+                                                                        * "/servlet/prodotti/formnuovo")
+                                                                        * .hasAuthority("Admin")
+                                                                        * 
+                                                                        * // richieste POST per nuovo, modifica, elimina
+                                                                        * prodotto richiedono il
+                                                                        * // ruolo
+                                                                        * // admin
+                                                                        * .requestMatchers(HttpMethod.POST,
+                                                                        * "/DateEsami/nuovo",
+                                                                        * "/DateEsami/modifica/**",
+                                                                        * "/Corso/nuovo",
+                                                                        * "/Corso/modifica/**",
+                                                                        * "/EsamiSuperati/nuovo",
+                                                                        * "/EsamiSuperati/modifica/**",
+                                                                        * "/servlet/prodotti/nuovo")
+                                                                        * .hasAuthority("Admin"))
+                                                                        * 
+                                                                        * .authorizeHttpRequests((requests) -> requests
+                                                                        * // richieste get che richiedono solo di
+                                                                        * autenticarsi
+                                                                        * .requestMatchers(
+                                                                        * "/",
+                                                                        * "/Studente/**",
+                                                                        * "/PPA/nuovo/",
+                                                                        * "/PPA/modifica/**",
+                                                                        * "/PPA/elimina/**",
+                                                                        * "/webjars/**", // necessarie per bootstrap e
+                                                                        * font
+                                                                        * // awesome
+                                                                        * "/css/**",
+                                                                        * "/img/**",
+                                                                        * "/error")
+                                                                        * .authenticated())
+                                                                        * 
+                                                                        * // il form login è permesso a tutti
+                                                                        * .formLogin((form) -> form.permitAll())
+                                                                        * // pagina custom (da gestire in un
+                                                                        * controller):
+                                                                        * // .formLogin((form) ->
+                                                                        * form.loginPage("/userLogin").permitAll())
+                                                                        * 
+                                                                        * // il logout è permesso a tutti
+                                                                        * .logout(
+                                                                        * (logout) -> logout.permitAll())
+                                                                        * 
+                                                                        * // protegge dagli attacchi Cross Site Request
+                                                                        * Forgery (CSRF)
+                                                                        * .csrf(Customizer.withDefaults());
+                                                                        */
                 return http.build();
         }
 
