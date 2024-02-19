@@ -1,4 +1,4 @@
-package org.generation.italy.corsi_online.security;
+package org.generation.italy.corsi_online.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

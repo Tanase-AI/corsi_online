@@ -46,8 +46,6 @@
                 <th>Nome</th>
                 <th class="text-end">Settore</th>
                 <th>Prezzo</th>
-                <th>Date Esami</th>
-                <th>Esami Superati</th>
 
                 <th></th>
                 <th></th>
@@ -62,12 +60,6 @@
                 <td th:text="${e.nome}"></td>
                 <td th:text="${e.settore}"></td>
                 <td class="text-end" th:text="${#numbers.formatCurrency(e.prezzo)}"></td>
-                <div th:each="d: ${dateEsami}">
-                    <td th:text="${d.} "></td>
-                </div>
-                <td th:text="${e.esamiSuperati}"></td>
-
-
                 <td><a th:href="|/Esami/dettaglio/${e.id}|"><i class="fa-solid fa-eye td-button"
                             title="Mostra dettaglio"></i></a></td>
                 <td><a sec:authorize="hasAuthority('Admin')" th:href="|/Esami/modifica/${e.id}|"><i

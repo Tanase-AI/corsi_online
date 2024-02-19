@@ -3,8 +3,6 @@ package org.generation.italy.corsi_online.model;
 import java.util.List;
 import java.util.Set;
 
-import org.generation.italy.corsi_online.security.Ruolo;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
