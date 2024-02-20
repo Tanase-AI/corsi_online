@@ -111,9 +111,8 @@ public class StudenteController {
                 prenotazione.setDataEsame(dateEsami);
                 prenotazione.setImporto(importo);
                 prenotazione.setDataPrenotazione(LocalDateTime.now());
-                System.out.println("presave");
+
                 ppaRepository.save(prenotazione);
-                System.out.println("postsave");
 
                 return "redirect:/Studente/" + userId + "/prenotazioni";
             } else {
