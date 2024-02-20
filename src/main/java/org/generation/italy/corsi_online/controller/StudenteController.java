@@ -90,31 +90,12 @@ public class StudenteController {
 
     // ------------------------------------------------------------------------------------------------------------
     // PRENOTA post
-    // @PostMapping("/{userId}/prenotazione")
-    // public String prenota(@PathVariable int userId, @ModelAttribute BigDecimal
-    // importo,
-    // @ModelAttribute LocalDateTime dataEsame,
-    // @ModelAttribute Corso corso) {
-    // Optional<User> userOptional = userRepository.findById(userId);
-    // if (userOptional.isPresent()) {
-    // User user = userOptional.get();
-    // PPA prenotazione = new PPA();
-    // DateEsami dataEsami = new DateEsami(corso, dataEsame);
-    // prenotazione.setStudente(user);
-    // prenotazione.setDataEsame(dataEsami);
-    // prenotazione.setImporto(importo);
-    // prenotazione.setDataPrenotazione(LocalDateTime.now());
-    // ppaRepository.save(prenotazione);
-    // return "redirect:/Studente/" + userId + "/prenotazioni";
-    // } else {
-    // return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
-    // }
-    // }
     @PostMapping("/{userId}/prenotazione")
     public String prenota(@PathVariable Integer userId,
-            @ModelAttribute("corsoId") Short corsoId,
-            @ModelAttribute("importo") BigDecimal importo,
-            @ModelAttribute("dataEsame") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dataEsame) {
+            @RequestParam(required = false) Short corsoId,
+            @RequestParam(required = false) BigDecimal importo,
+            @RequestParam(required = false) LocalDateTime dataEsame) {
+        System.out.println("entrato");
         Optional<User> userOptional = userRepository.findById(userId);
 
         if (userOptional.isPresent()) {
@@ -125,15 +106,21 @@ public class StudenteController {
                 Corso corso = corsoOptional.get();
                 PPA prenotazione = new PPA();
                 DateEsami dateEsami = new DateEsami(corso, dataEsame);
+                dateEsamiRepository.save(dateEsami);
                 prenotazione.setStudente(user);
                 prenotazione.setDataEsame(dateEsami);
                 prenotazione.setImporto(importo);
                 prenotazione.setDataPrenotazione(LocalDateTime.now());
+                System.out.println("presave");
                 ppaRepository.save(prenotazione);
+                System.out.println("postsave");
+
                 return "redirect:/Studente/" + userId + "/prenotazioni";
             } else {
-                return "redirect:/error";
+                return "redirect:/error"; // Gestire il caso in cui il corso non esiste
             }
+        } else {
+            return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
     // PRENOTA get
