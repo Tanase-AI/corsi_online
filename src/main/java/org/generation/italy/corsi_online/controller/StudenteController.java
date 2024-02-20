@@ -2,6 +2,7 @@ package org.generation.italy.corsi_online.controller;
 
 import java.util.Optional;
 
+import org.generation.italy.corsi_online.model.Corso;
 import org.generation.italy.corsi_online.model.PPA;
 import org.generation.italy.corsi_online.model.User;
 import org.generation.italy.corsi_online.repository.CorsoRepository;
@@ -41,6 +42,8 @@ public class StudenteController {
         return "test";
     }
 
+    // ------------------------------------------------------------------------------------------------------------
+                                                                    //ELENCO
     @GetMapping("/{userId}/corsi")
     public String viewCorsi(@PathVariable int userId, Model model) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -48,25 +51,14 @@ public class StudenteController {
             User user = userOptional.get();
             model.addAttribute("user", user);
             model.addAttribute("corsi", corsoRepository.findAll());
-            return "esami/elenco";
+            return "corsi/elenco";
         } else {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
 
-    @GetMapping("/{userId}/esamiSuperati")
-    public String viewEsamiSuperati(@PathVariable int userId, Model model) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            model.addAttribute("user", user);
-            model.addAttribute("esamiSuperati", esamiSuperatiRepository.findByStudente(user));
-            return "user/esamiSuperati";
-        } else {
-            return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
-        }
-    }
-
+// ------------------------------------------------------------------------------------------------------------
+                                                                        // PRENOTA post
     @PostMapping("/{userId}/prenotazione")
     public String prenota(@PathVariable int userId, @ModelAttribute PPA prenotazione) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -79,6 +71,7 @@ public class StudenteController {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
+                                                                        // PRENOTA post
 
     @GetMapping("/{userId}/prenotazioni")
     public String viewPrenotazioni(@PathVariable int userId, Model model) {
@@ -92,5 +85,20 @@ public class StudenteController {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
+// ------------------------------------------------------------------------------------------------------------
+    @GetMapping("/elimina/{id}")	
+	public String eliminaPPA(				
+				@PathVariable long id) {
+			Optional<Corso> optPPA=ppaRepository.findById(id);
+			if (optPPA.isPresent())		//il prodotto è stato trovato
+			{
+				ppaRepository.deleteById(id);
+				return "redirect:/Corsi/elenco";	
+			}
+			else
+				return "nontrovato";
+		}
+
+
 
 }

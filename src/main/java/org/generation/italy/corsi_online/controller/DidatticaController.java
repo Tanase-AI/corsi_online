@@ -1,11 +1,16 @@
 package org.generation.italy.corsi_online.controller;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+
 import org.generation.italy.corsi_online.model.Corso;
 import org.generation.italy.corsi_online.model.DateEsami;
+import org.generation.italy.corsi_online.model.User;
 import org.generation.italy.corsi_online.repository.CorsoRepository;
 import org.generation.italy.corsi_online.repository.DateEsamiRepository;
 import org.generation.italy.corsi_online.repository.EsamiSuperatiRepository;
+import org.generation.italy.corsi_online.repository.PPARepository;
+import org.generation.italy.corsi_online.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,32 +24,19 @@ import jakarta.validation.Valid;
 public class DidatticaController {
 
 	@Autowired
-	CorsoRepository corsoRepository;
+    CorsoRepository corsoRepository;
 
-	@Autowired
-	DateEsamiRepository dateEsamiRepository;
+    @Autowired
+    DateEsamiRepository dateEsamiRepository;
 
-	@GetMapping("/nuovo-corso")
-	public String nuovoCorsoGet(Model model) {
-		Corso c = new Corso();
+    @Autowired
+    PPARepository ppaRepository;
 
-		model.addAttribute("corso", c);
-		return "/corsi/nuovo";
-	}
+    @Autowired
+    EsamiSuperatiRepository esamiSuperatiRepository;
 
-	@PostMapping("/nuovo-corso")
-	public String nuovoCorsoPost(Model model,
-			@Valid @ModelAttribute("corso") Corso c,
-			BindingResult bindingResult) {
-
-		if (bindingResult.hasErrors()) {
-
-			return "/prodotti/nuovo";
-		}
-		corsoRepository.save(c);
-
-		return "redirect:/Prodotti/elenco";
-	}
+    @Autowired
+    UserRepository userRepository;
 
 	// -------------------------------------------------------------------------------------------------------------
 
@@ -81,15 +73,21 @@ public class DidatticaController {
 		return "redirect:/Prodotti/elenco";
 	}
 
-	// --------------------------------------------------------------------------------------------
-	@GetMapping("/elimina/{id}")
-	public String eliminaCorso(@PathVariable Integer id) {
-		Optional<Corso> optCorso = corsoRepository.findById(id);
-		if (optCorso.isPresent()) {
-			corsoRepository.deleteById(id);
-			return "redirect:/Corsi/elenco";
-		} else
-			return "nontrovato"; // todo html nontrovato
-	}
+    // ------------------------------------------------------------------------------------------------------------
+                                                                        //ESAMI SUPERATI get
+    @GetMapping("/{userId}/esamiSuperati")
+    public String viewEsamiSuperati(@PathVariable int userId, Model model) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            model.addAttribute("user", user);
+            model.addAttribute("esamiSuperati", esamiSuperatiRepository.findByStudente(user));
+            return "user/esamiSuperati";
+        } else {
+            return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
+        }
+    }
+
+
 
 }

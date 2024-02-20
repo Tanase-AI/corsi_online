@@ -15,7 +15,7 @@ public interface CorsoRepository extends JpaRepository<Corso, Short> {
     // List<Corso> findById(Integer id);
     List<Corso> findByNome(String nome);
     List<Corso> findBySettore(String settore);
-    Optional<Corso> findById(short id);;
+    Optional<Corso> findById(short id);
 }
 
 

@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Elenco Prenotazioni</title>
+    <title>esami</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta th:replace="fragments/resources">
-
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <h2>Elenco Prenotazioni</h2>
 
         <!-- Iterazione sulle prenotazioni del model -->
-        <table class="table">
+        <table class="table table-success table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -29,6 +29,7 @@
                     <th>Data Prenotazione</th>
                     <th>Data Esame</th>
                     <th>Importo</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -36,9 +37,11 @@
                 <tr th:each="prenotazione : ${prenotazioni}">
                     <td th:text="${prenotazione.id}"></td>
                     <td th:text="${prenotazione.dataEsame.Corso.nome}"></td>
-                    <td th:text="${prenotazione.dataPrenotazione}"></td>
-                    <td th:text="${prenotazione.dataEsame.dataEsame}"></td>
+                    <td th:text="${#temporals.format(prenotazione.dataPrenotazione,'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(prenotazione.dataEsame.dataEsame,'dd-MM-yyyy HH:mm')}"></td>
                     <td th:text="${prenotazione.importo}"></td>
+                    <td><a th:href="|/prenotazione/${prenotazione.id}/elimina|"><i class="fa-solid fa-xmark"
+                                title="Disdici prenotazione"></i></a></td>
                 </tr>
             </tbody>
         </table>
