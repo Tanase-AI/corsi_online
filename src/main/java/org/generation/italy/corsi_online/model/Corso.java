@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-public class Corso {
+public class Corso implements Comparable<Corso> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Corso {
 
     // Costruttore vuoto
     public Corso() {
-    }   
+    }
 
     // Costruttore con parametri
     public Corso(String nome, String settore, BigDecimal prezzo) {
@@ -99,4 +99,18 @@ public class Corso {
                 ", prezzo=" + prezzo +
                 '}';
     }
+
+    @Override
+    public int compareTo(Corso c) {
+        if (this.nome.compareTo(c.getNome()) != 0)
+            return this.nome.compareTo(c.getNome());
+        else {
+            if (this.nome.compareTo(c.getNome()) != 0) 
+                return this.nome.compareTo(c.getNome());
+            else { 
+                return this.prezzo.compareTo(c.prezzo);
+            }
+        }
+    }
+
 }

@@ -2,6 +2,8 @@ package org.generation.italy.corsi_online.controller;
 
 import java.util.Optional;
 
+import java.util.Collections;
+import java.util.ArrayList;
 import org.generation.italy.corsi_online.model.Corso;
 import org.generation.italy.corsi_online.model.PPA;
 import org.generation.italy.corsi_online.model.User;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,12 +48,37 @@ public class StudenteController {
     // ------------------------------------------------------------------------------------------------------------
     // ELENCO
     @GetMapping("/{userId}/corsi")
-    public String viewCorsi(@PathVariable int userId, Model model) {
+    public String viewCorsi(@PathVariable int userId, Model model,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String settore,
+            @RequestParam(required = false) String ordinamento) {
+
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+
+            ArrayList<Corso> elencoCorsi = null;
+            if (nome == null && settore == null)
+                elencoCorsi = (ArrayList<Corso>) corsoRepository.findAll();
+            else if (nome != null && settore == null)
+                elencoCorsi = (ArrayList<Corso>) corsoRepository.findByNomeLike("%" + nome + "%");
+            else if (nome == null && settore != null)
+                elencoCorsi = (ArrayList<Corso>) corsoRepository.findBySettoreLikeOrderByPrezzo("%" + settore + "%");
+            else
+                elencoCorsi = (ArrayList<Corso>) corsoRepository
+                        .findByNomeIgnoreCaseAndSettoreLike(nome, "%" + settore + "%");
+
+            if (ordinamento != null) {
+                if (ordinamento.equals("asc"))
+                    Collections.sort(elencoCorsi);
+                else if (ordinamento.equals("desc"))
+                    Collections.sort(elencoCorsi, Collections.reverseOrder());
+                else
+                    return "Ordinamento non valido";
+            }
+
             model.addAttribute("user", user);
-            model.addAttribute("corsi", corsoRepository.findAll());
+            model.addAttribute("corsi", elencoCorsi);
             return "corsi/elenco";
         } else {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
