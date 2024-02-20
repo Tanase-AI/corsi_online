@@ -12,31 +12,35 @@ import org.generation.italy.corsi_online.repository.EsamiSuperatiRepository;
 import org.generation.italy.corsi_online.repository.PPARepository;
 import org.generation.italy.corsi_online.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
 
+@Controller
+@RequestMapping("/Didattica")
 public class DidatticaController {
 
 	@Autowired
-    CorsoRepository corsoRepository;
+	CorsoRepository corsoRepository;
 
-    @Autowired
-    DateEsamiRepository dateEsamiRepository;
+	@Autowired
+	DateEsamiRepository dateEsamiRepository;
 
-    @Autowired
-    PPARepository ppaRepository;
+	@Autowired
+	PPARepository ppaRepository;
 
-    @Autowired
-    EsamiSuperatiRepository esamiSuperatiRepository;
+	@Autowired
+	EsamiSuperatiRepository esamiSuperatiRepository;
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
 	// -------------------------------------------------------------------------------------------------------------
 
@@ -73,21 +77,19 @@ public class DidatticaController {
 		return "redirect:/Prodotti/elenco";
 	}
 
-    // ------------------------------------------------------------------------------------------------------------
-                                                                        //ESAMI SUPERATI get
-    @GetMapping("/{userId}/esamiSuperati")
-    public String viewEsamiSuperati(@PathVariable int userId, Model model) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            model.addAttribute("user", user);
-            model.addAttribute("esamiSuperati", esamiSuperatiRepository.findByStudente(user));
-            return "user/esamiSuperati";
-        } else {
-            return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
-        }
-    }
-
-
+	// ------------------------------------------------------------------------------------------------------------
+	// ESAMI SUPERATI get
+	@GetMapping("/{userId}/esamiSuperati")
+	public String viewEsamiSuperati(@PathVariable int userId, Model model) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			model.addAttribute("user", user);
+			model.addAttribute("esamiSuperati", esamiSuperatiRepository.findByStudente(user));
+			return "user/esamiSuperati";
+		} else {
+			return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
+		}
+	}
 
 }

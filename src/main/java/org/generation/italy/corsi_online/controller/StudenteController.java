@@ -43,7 +43,7 @@ public class StudenteController {
     }
 
     // ------------------------------------------------------------------------------------------------------------
-                                                                    //ELENCO
+    // ELENCO
     @GetMapping("/{userId}/corsi")
     public String viewCorsi(@PathVariable int userId, Model model) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -57,8 +57,8 @@ public class StudenteController {
         }
     }
 
-// ------------------------------------------------------------------------------------------------------------
-                                                                        // PRENOTA post
+    // ------------------------------------------------------------------------------------------------------------
+    // PRENOTA post
     @PostMapping("/{userId}/prenotazione")
     public String prenota(@PathVariable int userId, @ModelAttribute PPA prenotazione) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -71,7 +71,7 @@ public class StudenteController {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
-                                                                        // PRENOTA post
+    // PRENOTA post
 
     @GetMapping("/{userId}/prenotazioni")
     public String viewPrenotazioni(@PathVariable int userId, Model model) {
@@ -85,20 +85,30 @@ public class StudenteController {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
-// ------------------------------------------------------------------------------------------------------------
-    @GetMapping("/elimina/{id}")	
-	public String eliminaPPA(				
-				@PathVariable long id) {
-			Optional<Corso> optPPA=ppaRepository.findById(id);
-			if (optPPA.isPresent())		//il prodotto è stato trovato
-			{
-				ppaRepository.deleteById(id);
-				return "redirect:/Corsi/elenco";	
-			}
-			else
-				return "nontrovato";
-		}
 
+    @GetMapping("/{userId}/corso/dettaglio/{corsoId}")
+    public String dettaglioCorso(@PathVariable short corsoId, int userId, Model model) {
+        Optional<Corso> corsoOptional = corsoRepository.findById(corsoId);
+        if (corsoOptional.isPresent()) {
+            Corso corso = corsoOptional.get();
+            model.addAttribute("corso", corso);
+            return "corsi/dettaglio";
+        } else {
+            return "redirect:/error";
+        }
+    }
 
+    // ------------------------------------------------------------------------------------------------------------
+    @GetMapping("/elimina/{id}")
+    public String eliminaPPA(
+            @PathVariable long id) {
+        Optional<Corso> optPPA = ppaRepository.findById(id);
+        if (optPPA.isPresent()) // il prodotto è stato trovato
+        {
+            ppaRepository.deleteById(id);
+            return "redirect:/Corsi/elenco";
+        } else
+            return "nontrovato";
+    }
 
 }
