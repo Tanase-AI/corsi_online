@@ -25,11 +25,17 @@
                     <thead>
                         <tr>
                             <th>Data Esame</th>
+                            <th></th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <tr th:each="esame : ${corso.dateEsami}">
                             <td th:text="${#temporals.format(esame.dataEsame,'dd-MM-yyyy HH:mm')}"></td>
+                            <td>
+                                <a th:href="@{'/prenotaEsame/' + ${corso.id} + '/' + ${esame.id}}"
+                                    class="btn btn-primary">Prenota</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

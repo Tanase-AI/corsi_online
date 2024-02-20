@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
@@ -84,16 +85,20 @@ public class MarketingController {
     }
 
     // -----------------------------------------------------------------------------------------------
-    @GetMapping("/elimina/{id}")
-    public String eliminaCorso(
-            @PathVariable short id) {
-        Optional<Corso> optCorso = corsoRepository.findById(id);
-        if (optCorso.isPresent()) // il prodotto è stato trovato
-        {
-            corsoRepository.deleteById(id);
-            return "redirect:/corsi/error";
-        } else
-            return "nontrovato";
-    }
+    // @Transactional
+    // @GetMapping("/elimina/{id}")
+    // public String eliminaCorso(
+    // @PathVariable short id) {
+    // Optional<Corso> optCorso = corsoRepository.findById(id);
+    // if (optCorso.isPresent()) {
+    // Corso corso = optCorso.get();
+    // esamiSuperatiRepository.deleteByCorso(corso);
+    // dateEsamiRepository.deleteByCorso(corso);
+    // corsoRepository.deleteById(id);
+
+    // return "redirect:/corsi/error";
+    // } else
+    // return "nontrovato";
+    // }
 
 }
