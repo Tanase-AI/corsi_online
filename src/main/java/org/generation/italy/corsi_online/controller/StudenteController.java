@@ -87,15 +87,21 @@ public class StudenteController {
     }
 
     @GetMapping("/{userId}/corso/dettaglio/{corsoId}")
-    public String dettaglioCorso(@PathVariable short corsoId, int userId, Model model) {
-        Optional<Corso> corsoOptional = corsoRepository.findById(corsoId);
-        if (corsoOptional.isPresent()) {
-            Corso corso = corsoOptional.get();
-            model.addAttribute("corso", corso);
-            return "corsi/dettaglio";
-        } else {
-            return "redirect:/error";
+    public String dettaglioCorso(@PathVariable short corsoId, @PathVariable Optional<Integer> userId, Model model) {
+        if (userId.isPresent()) {
+            Optional<Corso> corsoOptional = corsoRepository.findById(corsoId);
+            Optional<User> userOptional = userRepository.findById(userId.get());
+
+            if (corsoOptional.isPresent() && userOptional.isPresent()) {
+                Corso corso = corsoOptional.get();
+                User user = userOptional.get();
+                model.addAttribute("user", user);
+                model.addAttribute("corso", corso);
+                return "corsi/dettaglio";
+            }
         }
+
+        return "redirect:/error";
     }
 
     // ------------------------------------------------------------------------------------------------------------

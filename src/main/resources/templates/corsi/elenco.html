@@ -40,13 +40,12 @@
                     <td th:text="${e.nome}"></td>
                     <td class="text-end" th:text="${e.settore}"></td>
                     <td th:text="${#numbers.formatCurrency(e.prezzo)}"></td>
-                    <td><a th:href="|/Studente/corso/dettaglio/${e.id}|"><i class="fa-solid fa-eye td-button"
+                    <td><a th:href="|/Studente/${user.id}/corso/dettaglio/${e.id}|"><i class="fa-solid fa-eye td-button"
                                 title="Mostra dettaglio"></i></a></td>
-                    <td><a sec:authorize="hasAuthority('Admin')" th:href="|/Esami/modifica/${e.id}|"><i
-                                class="fa-solid fa-pen-to-square td-button" title="Modifica"></i></a></td>
-                    <td><a sec:authorize="hasAuthority('Admin')" th:href="|/Esami/elimina/${e.id}|"
-                            onclick="return confirm('Sei sicuro/a?')"><i class="fa-solid fa-trash td-button"
-                                title="Elimina"></i></a></td>
+                    <td><a th:href="|/Marketing/elimina/${e.id}|"><i class="fa-solid fa-pen-to-square td-button"
+                                title="Modifica"></i></a></td>
+                    <td><a th:href="|/Marketing/elimina/${e.id}|" onclick="return confirm('Sei sicuro/a?')"><i
+                                class="fa-solid fa-trash td-button" title="Elimina"></i></a></td>
 
                 </tr>
             </tbody>

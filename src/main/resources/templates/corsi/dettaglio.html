@@ -9,29 +9,32 @@
 
 <body>
     <nav th:replace="fragments/navbar"></nav>
-    <h1>Dettaglio Corso</h1>
+    <div class="container text-center mt-5">
+        <h1>Dettaglio Corso</h1>
 
-    <div th:if="${corso != null}">
-        <p>ID Corso: <span th:text="${corso.id}"></span></p>
-        <p>Nome Corso: <span th:text="${corso.nome}"></span></p>
-        <p>Settore: <span th:text="${corso.settore}"></span></p>
-        <p>Prezzo: <span th:text="${corso.prezzo}"></span></p>
+        <div th:if="${corso != null}">
+            <p>ID Corso: <span th:text="${corso.id}"></span></p>
+            <p>Nome Corso: <span th:text="${corso.nome}"></span></p>
+            <p>Settore: <span th:text="${corso.settore}"></span></p>
+            <p>Prezzo: <span th:text="${corso.prezzo}"></span></p>
 
-        <h2>Date degli Esami</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID Esame</th>
-                    <th>Data Esame</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="esame : ${corso.dateEsami}">
-                    <td th:text="${esame.id}"></td>
-                    <td th:text="${esame.dataEsame}"></td>
-                </tr>
-            </tbody>
-        </table>
+            <br>
+            <h2>Date degli Esami</h2>
+            <div>
+                <table border="1" class="table">
+                    <thead>
+                        <tr>
+                            <th>Data Esame</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="esame : ${corso.dateEsami}">
+                            <td th:text="${#temporals.format(esame.dataEsame,'dd-MM-yyyy HH:mm')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <!-- Altri dettagli del corso o azioni possono essere aggiunti qui -->
 
