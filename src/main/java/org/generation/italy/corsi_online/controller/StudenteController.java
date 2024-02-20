@@ -1,4 +1,5 @@
 package org.generation.italy.corsi_online.controller;
+
 import org.generation.italy.corsi_online.model.DateEsami;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import org.generation.italy.corsi_online.repository.EsamiSuperatiRepository;
 import org.generation.italy.corsi_online.repository.PPARepository;
 import org.generation.italy.corsi_online.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,26 +90,53 @@ public class StudenteController {
 
     // ------------------------------------------------------------------------------------------------------------
     // PRENOTA post
+    // @PostMapping("/{userId}/prenotazione")
+    // public String prenota(@PathVariable int userId, @ModelAttribute BigDecimal
+    // importo,
+    // @ModelAttribute LocalDateTime dataEsame,
+    // @ModelAttribute Corso corso) {
+    // Optional<User> userOptional = userRepository.findById(userId);
+    // if (userOptional.isPresent()) {
+    // User user = userOptional.get();
+    // PPA prenotazione = new PPA();
+    // DateEsami dataEsami = new DateEsami(corso, dataEsame);
+    // prenotazione.setStudente(user);
+    // prenotazione.setDataEsame(dataEsami);
+    // prenotazione.setImporto(importo);
+    // prenotazione.setDataPrenotazione(LocalDateTime.now());
+    // ppaRepository.save(prenotazione);
+    // return "redirect:/Studente/" + userId + "/prenotazioni";
+    // } else {
+    // return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
+    // }
+    // }
     @PostMapping("/{userId}/prenotazione")
-    public String prenota(@PathVariable int userId, @ModelAttribute BigDecimal importo, @ModelAttribute LocalDateTime dataEsame, Short idEsame) {
+    public String prenota(@PathVariable Integer userId,
+            @ModelAttribute("corsoId") Short corsoId,
+            @ModelAttribute("importo") BigDecimal importo,
+            @ModelAttribute("dataEsame") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime dataEsame) {
         Optional<User> userOptional = userRepository.findById(userId);
+
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            PPA prenotazione= new PPA();
-            Corso c= new Corso();
-            DateEsami dataEsami=new DateEsami(dataEsame, );
-            prenotazione.setStudente(user);
-            prenotazione.setDataEsame(dataEsame);
-            prenotazione.setDataPrenotazione(LocalDateTime.now());
+            Optional<Corso> corsoOptional = corsoRepository.findById(corsoId);
 
-
-            ppaRepository.save(prenotazione);
-            return "redirect:/Studente/user/" + userId + "/prenotazioni";
-        } else {
-            return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
+            if (corsoOptional.isPresent()) {
+                Corso corso = corsoOptional.get();
+                PPA prenotazione = new PPA();
+                DateEsami dateEsami = new DateEsami(corso, dataEsame);
+                prenotazione.setStudente(user);
+                prenotazione.setDataEsame(dateEsami);
+                prenotazione.setImporto(importo);
+                prenotazione.setDataPrenotazione(LocalDateTime.now());
+                ppaRepository.save(prenotazione);
+                return "redirect:/Studente/" + userId + "/prenotazioni";
+            } else {
+                return "redirect:/error";
+            }
         }
     }
-    //PRENOTA get
+    // PRENOTA get
 
     @GetMapping("/{userId}/prenotazioni")
     public String viewPrenotazioni(@PathVariable int userId, Model model) {
@@ -121,7 +150,8 @@ public class StudenteController {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
-//-----------------------------------------------------------------------------------------------------------
+
+    // -----------------------------------------------------------------------------------------------------------
     @GetMapping("/{userId}/corso/dettaglio/{corsoId}")
     public String dettaglioCorso(@PathVariable short corsoId, @PathVariable Optional<Integer> userId, Model model) {
         if (userId.isPresent()) {
