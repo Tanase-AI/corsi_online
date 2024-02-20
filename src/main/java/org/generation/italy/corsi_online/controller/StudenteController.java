@@ -1,7 +1,8 @@
 package org.generation.italy.corsi_online.controller;
-
+import org.generation.italy.corsi_online.model.DateEsami;
+import java.time.LocalDateTime;
 import java.util.Optional;
-
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.ArrayList;
 import org.generation.italy.corsi_online.model.Corso;
@@ -88,18 +89,25 @@ public class StudenteController {
     // ------------------------------------------------------------------------------------------------------------
     // PRENOTA post
     @PostMapping("/{userId}/prenotazione")
-    public String prenota(@PathVariable int userId, @ModelAttribute PPA prenotazione) {
+    public String prenota(@PathVariable int userId, @ModelAttribute BigDecimal importo, @ModelAttribute LocalDateTime dataEsame, Short idEsame) {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+            PPA prenotazione= new PPA();
+            Corso c= new Corso();
+            DateEsami dataEsami=new DateEsami(dataEsame, );
             prenotazione.setStudente(user);
+            prenotazione.setDataEsame(dataEsame);
+            prenotazione.setDataPrenotazione(LocalDateTime.now());
+
+
             ppaRepository.save(prenotazione);
             return "redirect:/Studente/user/" + userId + "/prenotazioni";
         } else {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
-    // PRENOTA post
+    //PRENOTA get
 
     @GetMapping("/{userId}/prenotazioni")
     public String viewPrenotazioni(@PathVariable int userId, Model model) {
@@ -113,7 +121,7 @@ public class StudenteController {
             return "redirect:/error"; // Gestire il caso in cui l'utente non esiste
         }
     }
-
+//-----------------------------------------------------------------------------------------------------------
     @GetMapping("/{userId}/corso/dettaglio/{corsoId}")
     public String dettaglioCorso(@PathVariable short corsoId, @PathVariable Optional<Integer> userId, Model model) {
         if (userId.isPresent()) {

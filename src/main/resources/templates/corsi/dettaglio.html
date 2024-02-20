@@ -33,7 +33,12 @@
                         <tr th:each="esame : ${corso.dateEsami}">
                             <td th:text="${#temporals.format(esame.dataEsame,'dd-MM-yyyy HH:mm')}"></td>
                             <td>
-                                <a th:href="@{'/prenotaEsame/' + ${corso.id} + '/' + ${esame.id}}" class="btn btn-primary">Prenota</a>
+                                <form th:action="@{'/' + ${userId} + '/prenotazione'}" method="post">
+                                    <input type="hidden" name="esameId" th:value="${corso.id}" />
+                                    <input type="hidden" name="importo" th:value="${corso.prezzo}" />
+                                    <input type="hidden" name="dataEsame" th:value="${corso.dataEsame}" />
+                                    <button type="submit" class="btn btn-primary">Prenota</a>
+                                </form>
                             </td>
                         </tr>
                     </tbody>

@@ -10,8 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-
 // P.renotazione con P.agamento A.nticipato 
 @Entity
 public class PPA {
@@ -32,10 +30,6 @@ public class PPA {
     @Column(precision = 6, scale = 2)
     private BigDecimal importo;
 
-    @PrePersist
-    public void PrePersist() {
-        dataPrenotazione = LocalDateTime.now();
-    }
 
     public void Studente(User user) {
         // TODO Auto-generated method stub
